@@ -1,4 +1,7 @@
+import Ember from 'ember';
 import ENV from '../config/environment';
+
+const { Component, isArray, $, Logger, assert } = Ember;
 
 /**
  * Variable to ensure that the initializer is only ran once. Though in this
@@ -13,7 +16,7 @@ export function initialize(application) {
   const addonConfig = ENV['ember-a11y-testing'] || {};
   const { componentOptions: { axeOptions, axeCallback } = {} } = addonConfig;
 
-  Ember.Component.reopen({
+  Component.reopen({
     /**
      * An optional callback to process the results from the a11yCheck.
      * Defaults to `undefined` if not set in the application's configuration.
@@ -32,6 +35,16 @@ export function initialize(application) {
     axeOptions,
 
     /**
+     * An array of classNames to add to the component when a violation occurs.
+     * If unspecified, the `axe-violation` class is used to apply our default
+     * styling
+     *
+     * @public
+     * @type {Array}
+     */
+    axeViolationClassNames: ['axe-violation'],
+
+    /**
      * Turns off the accessibility audit during rendering.
      *
      * @public
@@ -41,47 +54,66 @@ export function initialize(application) {
 
     /**
      * Runs an accessibility audit on any render of the component.
+     *
      * @private
      * @return {Void}
      */
-    _runAudit: Ember.on('didRender', function() {
+    _runAudit() {
       if (this.turnAuditOff || Ember.testing) { return; }
-
       this.audit();
-    }),
+    },
+
 
     /**
-     * Runs the axe a11yCheck audit and logs any violations to the console. It
-     * then passes the results to axeCallback if one is defined.
+     * Handles the results of running `axe.a11yCheck`
+     * by generating a violation response for each violation, and
+     * then passes the results to the `axeCallback` if one is defined.
+     *
+     * @private
+     * @return {Void}
+     */
+    _handleA11yCheck(results) {
+      const violationClassNames = this.get('axeViolationClassNames');
+      assert('axeViolationClassNames should be an array of class names', isArray(violationClassNames));
+
+      results.violations.forEach((v, idx) => this._generateViolation(v, idx+1, violationClassNames));
+
+      if (this.axeCallback) {
+        assert('axeCallback should be a function.', typeof this.axeCallback === 'function');
+        this.axeCallback(results);
+      }
+    },
+
+    /**
+     * Logs a violtion to the console and adds classes to the violation target
+     * node to display a warning
+     *
+     * @private
+     * @return {Void}
+     */
+    _generateViolation(violation, violationNum, violationClassNames) {
+      Logger.error(`Violation #${violationNum}`, violation);
+
+      violation.nodes.forEach((node) => {
+        $(node.target.join(','))[0].classList.add(...violationClassNames);
+      });
+    },
+
+
+    didRender() {
+      this._super(...arguments);
+      this._runAudit();
+    },
+
+    /**
+     * Runs the axe a11yCheck audit if this component has a defined tagName.
+     *
      * @public
      * @return {Void}
      */
     audit() {
       if (this.get('tagName') !== '') {
-        axe.a11yCheck(this.$(), this.axeOptions, (results) => {
-          let violations = results.violations;
-
-          for (let i = 0, l = violations.length; i < l; i++) {
-            let violation = violations[i];
-
-            Ember.Logger.error(`Violation #${i+1}`, violation);
-
-            let nodes = violation.nodes;
-
-            for (let j = 0, k = nodes.length; j < k; j++) {
-              let node = nodes[j];
-
-              if (node) {
-                Ember.$(node.target.join(','))[0].classList.add('axe-violation');
-              }
-            }
-          }
-
-          if (this.axeCallback) {
-            Ember.assert('axeCallback should be a function.', typeof this.axeCallback === 'function');
-            this.axeCallback(results);
-          }
-        });
+        axe.a11yCheck(this.$(), this.axeOptions, this._handleA11yCheck.bind(this));
       }
     }
   });
