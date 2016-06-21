@@ -1,7 +1,7 @@
 /* global sinon, axe */
 import Ember from 'ember';
 import { initialize } from 'dummy/instance-initializers/axe-component';
-import { module, test, skip } from 'qunit';
+import { module, test } from 'qunit';
 
 const { Application, Component, Logger, run } = Ember;
 
@@ -188,7 +188,7 @@ test('custom classNames are set on the violating elmenet if they are defined', f
   document.body.appendChild(dummyDOMNode);
 
   // run(() => component.appendTo('#ember-testing'));
-  let a11yCheckStub = sandbox.stub(axe, 'a11yCheck', function(el, options, callback) {
+  sandbox.stub(axe, 'a11yCheck', function(el, options, callback) {
     callback({
       violations: [{
         name: 'test',
@@ -218,7 +218,7 @@ test(`the component defaults to setting the \`axe-violation\` class on
   document.body.appendChild(dummyDOMNode);
 
   // run(() => component.appendTo('#ember-testing'));
-  let a11yCheckStub = sandbox.stub(axe, 'a11yCheck', function(el, options, callback) {
+  sandbox.stub(axe, 'a11yCheck', function(el, options, callback) {
     callback({
       violations: [{
         name: 'test',

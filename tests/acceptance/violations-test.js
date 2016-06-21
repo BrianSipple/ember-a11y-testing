@@ -3,14 +3,15 @@ import { test } from 'qunit';
 import moduleForAcceptance from '../../tests/helpers/module-for-acceptance';
 import sinon from 'sinon';
 
-let actual, expected, sandbox;
+const { A } = Ember;
 
 const IDs = {
   emptyButton: '#empty-button',
   sloppyInput: '#sloppy-input'
 };
 
-const findBy = (items, key, val) => items.find(item => item[key] === val);
+
+let actual, expected, sandbox;
 
 moduleForAcceptance('Acceptance | violations', {
   beforeEach() {
@@ -25,12 +26,16 @@ moduleForAcceptance('Acceptance | violations', {
 test('marking DOM nodes with violations', function(assert) {
 
   sandbox.stub(axe.ember, 'a11yCheckCallback', function (results) {
-    console.log('Results****', results.violations.find);
-    assert.equal(results.violations.length, 2);
+    actual = results.violations.length;
+    expected = 2;
 
-    const buttonNameViolation = findBy(results.violations, 'id', 'button-name');
-    assert.equal(buttonNameViolation.nodes[0].target[0], IDs.emptyButton);
+    assert.equal(actual, expected);
 
+    const buttonNameViolation = A(results.violations).findBy('id', 'button-name');
+    actual = buttonNameViolation.nodes[0].target[0];
+    expected = IDs.emptyButton;
+
+    assert.equal(actual, expected);
   });
 
   visit('/violations');
