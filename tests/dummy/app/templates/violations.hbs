@@ -1,3 +1,20 @@
-{{empty-button id="empty-button" data-test-selector="empty-button"}}
+<main class="page p-violations">
 
-{{sloppy-input id="sloppy-input" data-test-selector="sloppy-input"}}
+  <section class="content">
+
+    <header class="page-header p-violations__header">
+      <h2>Violation Examples</h2>
+    </header>
+
+    {{empty-button id="empty-button" data-test-selector="empty-button"}}
+
+    {{#x-form}}
+      {{sloppy-input id="sloppy-input-1" data-test-selector="sloppy-input"}}
+      {{sloppy-input id="sloppy-input-2" data-test-selector="sloppy-input"}}
+    {{/x-form}}
+
+    {{outlet}}
+
+  </section>
+
+</main>
