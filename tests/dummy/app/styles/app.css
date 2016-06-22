@@ -1,7 +1,7 @@
 @import './components/components.css';
 @import './pages/pages.css';
 @import './_utilities.css';
-@import './_patterns.css';
+@import '_patterns.css';
 
 
 body {
