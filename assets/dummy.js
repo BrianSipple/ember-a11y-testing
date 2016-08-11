@@ -2183,7 +2183,7 @@ catch(err) {
 /* jshint ignore:start */
 
 if (!runningTests) {
-  require("dummy/app")["default"].create({"name":"ember-a11y-testing","version":"0.1.5+dcbf9493"});
+  require("dummy/app")["default"].create({"name":"ember-a11y-testing","version":"0.1.5+d19e0e50"});
 }
 
 /* jshint ignore:end */
