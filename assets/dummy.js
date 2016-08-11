@@ -553,7 +553,6 @@ define('dummy/instance-initializers/axe-component', ['exports', 'ember', 'dummy/
     var visualNoiseLevel = componentOptions.visualNoiseLevel;
     var axeViolationClassNames = componentOptions.axeViolationClassNames;
 
-    debugger;
     Component.reopen({
       /**
        * An optional callback to process the results from the a11yCheck.
@@ -638,7 +637,6 @@ define('dummy/instance-initializers/axe-component', ['exports', 'ember', 'dummy/
       audit: function audit() {
         var _this = this;
 
-        debugger;
         if (this.get('tagName') !== '') {
 
           axe.a11yCheck(this.$(), this.axeOptions, function (results) {
@@ -660,7 +658,7 @@ define('dummy/instance-initializers/axe-component', ['exports', 'ember', 'dummy/
 
               for (var j = 0, k = nodes.length; j < k; j++) {
                 nodeData = nodes[j];
-                debugger;
+
                 if (nodeData) {
                   var _nodeElem$classList;
 
@@ -692,7 +690,6 @@ define('dummy/instance-initializers/axe-component', ['exports', 'ember', 'dummy/
        * @return {Void}
        */
       _runAudit: function _runAudit() {
-        debugger;
         if (this.turnAuditOff || _ember['default'].testing) {
           return;
         }
@@ -2183,7 +2180,7 @@ catch(err) {
 /* jshint ignore:start */
 
 if (!runningTests) {
-  require("dummy/app")["default"].create({"name":"ember-a11y-testing","version":"0.1.5+d19e0e50"});
+  require("dummy/app")["default"].create({"name":"ember-a11y-testing","version":"0.1.5+6891245a"});
 }
 
 /* jshint ignore:end */
