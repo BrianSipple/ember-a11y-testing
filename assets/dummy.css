@@ -1,0 +1,351 @@
+@charset "UTF-8";
+/**
+ * -----------------------------------------
+ * COLORS
+ * -----------------------------------------
+ */
+/**
+ * -----------------------------------------
+ * ANIMATION
+ * -----------------------------------------
+ */
+/**
+ * -----------------------------------------
+ * DIMENSIONS
+ * -----------------------------------------
+ */
+/*
+ * 180:130 padding ratio to align content aspect ratio with human FOV
+ */
+/* This could be a breakpoint in, you know, a real app 😜 */
+.c-button {
+  display: flex;
+  font-size: 1em;
+  padding: 0.75em 1.05em;
+  border-radius: 0.125em;
+  color: #fafafa;
+  border: 0;
+  cursor: pointer;
+  background-color: #6441a4;
+  transition-property: background-color;
+  transition-duration: 0.25s;
+  transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1); }
+  .c-button:hover {
+    background-color: #7d5bbe;
+    transition-timing-function: cubic-bezier(0.55, 0.085, 0.68, 0.53); }
+
+.c-img {
+  object-fit: cover; }
+
+.c-menu-link-item {
+  height: 3.25em;
+  position: relative; }
+  .c-menu-link-item::before, .c-menu-link-item::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    z-index: -1;
+    transition-property: opacity;
+    transition-duration: 0.25s;
+    transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1); }
+  .c-menu-link-item:hover:not(.is-active)::before, .c-menu-link-item:focus:not(.is-active)::before {
+    opacity: 1;
+    transition-timing-function: cubic-bezier(0.55, 0.085, 0.68, 0.53); }
+  .c-menu-link-item.is-active::after {
+    opacity: 1; }
+  .c-menu-link-item .c-menu-link-item__link {
+    display: flex;
+    align-items: center; }
+
+/* ease-out-cubic with 8% bounce */
+/* ease-in-sine */
+.c-radio-track {
+  border: 0; }
+
+.c-radio-track__heading {
+  font-size: 1.67em;
+  font-weight: bold;
+  padding-bottom: 0.5em;
+  color: #3a2e70; }
+
+/**
+ * We'll treat the the container for our radio items as the "line",
+ * and make the track from a background linear gradient
+ */
+.c-radio-track__line {
+  margin: 0;
+  height: 4rem;
+  background-image: linear-gradient(to bottom, transparent 0%, transparent 48%, #969696 48%, #969696 52%, transparent 52%);
+  display: flex;
+  align-items: center;
+  justify-content: space-around; }
+
+/**
+ * The containing element for each item, which consists of a wrapping
+ * label, the radio input, and a span that will comprise the label text,
+ * and shape of the indicators (using the spans ::after and ::before psuedo-elements)
+ */
+.c-radio-track__radio-item {
+  width: 2rem;
+  height: 2rem;
+  cursor: pointer;
+  border-radius: 50%;
+  position: relative;
+  background-color: transparent; }
+
+.c-radio-track__item-input {
+  clip: rect(0 0 0 0);
+  height: 1px;
+  width: 1px;
+  margin: -1px;
+  position: absolute;
+  padding: 0;
+  overflow: hidden;
+  border: 0; }
+
+/**
+ * Each item will have a "pointer" and a "node" (the circle and a text title)
+ * which comprises its visual appearance a title will sit below it
+ */
+.c-radio-track__item-pointer,
+.c-radio-track__item-node {
+  position: absolute;
+  transform: translateX(-50%); }
+
+.c-radio-track__item-node {
+  font-weight: bold;
+  color: #969696;
+  white-space: nowrap;
+  pointer-events: none;
+  /* Have the pointer-events handled by the ::before element */
+  /* Push the title down below the psuedo-elements */
+  top: calc(0.4em + 2rem);
+  transition-property: color; }
+
+.c-radio-track__item-pointer {
+  position: absolute;
+  color: #7d5bbe;
+  margin-top: calc( -1 * ( 1rem + 1.5em )); }
+
+.c-radio-track__item-pointer::after {
+  font-size: 1.5em;
+  opacity: 0;
+  transform: scale(0);
+  content: '\0020\2193'; }
+
+/**
+ * Set up our circles
+ */
+.c-radio-track__item-node::after,
+.c-radio-track__item-node::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  margin-left: -1rem;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  margin-top: calc(-1 * 2rem - 0.4em); }
+
+/**
+ * The ::before circle will be visible in the "unchecked" state
+ */
+.c-radio-track__item-node::before {
+  opacity: 1;
+  transform: scale(1);
+  background-color: #b8acf1;
+  transition-delay: 0;
+  pointer-events: all; }
+
+/**
+ * The ::after circle will animate over the ::before circle
+ * when the radio becomes checked
+ */
+.c-radio-track__item-node::after {
+  opacity: 0;
+  transform: scale(0);
+  background-image: radial-gradient(circle, #3a2e70 0%, #3a2e70);
+  box-shadow: 0 0 0 0.25em #b8acf1, 0 0 0 0.5em #3a2e70; }
+
+/* --------------------- Animations & event handling ----------------- */
+.c-radio-track__item-pointer::after,
+.c-radio-track__item-node::after,
+.c-radio-track__item-node::before {
+  transition-property: opacity, transform, background-color;
+  transition-duration: 0.37s;
+  transition-timing-function: cubic-bezier(0.47, 0, 0.745, 0.715); }
+
+/**
+ * Define animations for the sibling of the input when the input
+ * becomes checked
+ */
+.c-radio-track__item-input:checked + .c-radio-track__item-node {
+  color: #7d5bbe; }
+  .c-radio-track__item-input:checked + .c-radio-track__item-node::after {
+    opacity: 1;
+    transform: scale(1);
+    transition-timing-function: cubic-bezier(0, 0.3, 0, 1.48); }
+  .c-radio-track__item-input:checked + .c-radio-track__item-node::before {
+    opacity: 0;
+    transition-delay: 0.37s; }
+
+.c-radio-track__item-input:focus ~ .c-radio-track__item-pointer::after {
+  opacity: 1;
+  transform: scale(1);
+  transition-timing-function: cubic-bezier(0, 0.3, 0, 1.48); }
+
+/**
+ * Hovering over circle when it's not focused or checked
+ */
+.c-radio-track__item-input:hover:not(:focus):not(:checked) + .c-radio-track__item-node::before {
+  background-color: #6441a4; }
+
+.c-violations-grid-item {
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.23), 0 3px 12px rgba(0, 0, 0, 0.16); }
+  .c-violations-grid-item .c-violations-grid-item__header {
+    height: 20%; }
+  .c-violations-grid-item .c-violations-grid-item__body {
+    height: 80%; }
+  .c-violations-grid-item .c-violations-grid-item__header,
+  .c-violations-grid-item .c-violations-grid-item__body {
+    overflow: hidden; }
+  .c-violations-grid-item .c-violations-grid-item__body-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap; }
+  .c-violations-grid-item .c-violations-grid-item__title {
+    margin-bottom: 2em; }
+
+/**
+ * "Objects" (prefixed with "o-") that are meant to
+ * comprise lightweight, abstract, composable patterns
+ * @see: https://www.google.com/search?q=object+orieinted+css&oq=object+orieinted+css&aqs=chrome..69i57j0l5.3247j0j7&sourceid=chrome&ie=UTF-8
+ */
+.o-content-box {
+  box-sizing: border-box;
+  padding: 0.75em 1.05em; }
+
+.o-content-box--lg {
+  box-sizing: border-box;
+  padding: 1.5em 2.1em; }
+
+.o-menu-link {
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer; }
+
+.p-violations__header,
+.p-violations__noise-selectors,
+.p-violations__body {
+  margin-bottom: 2rem; }
+
+.p-violations__header-hint {
+  color: #3a2e70; }
+
+.p-violations__noise-selectors-container {
+  border: 0; }
+
+.p-violations__grid {
+  max-width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-around;
+  flex-direction: row; }
+
+.p-violations__grid-item {
+  position: relative;
+  width: 24rem;
+  flex-grow: 0;
+  flex-shrink: 1;
+  height: 13.2rem;
+  background-color: #fafafa;
+  margin: 0.5em 0.75em; }
+
+@media screen and (max-width: 40rem) {
+  .p-violations__grid {
+    flex-direction: column; }
+  .p-violations__grid-item,
+  .p-violations__header-hint {
+    width: 100%; } }
+
+.p-violations__grid-item-content--low-contrast-text {
+  color: yellow; }
+
+.p-violations__grid-item-content--radio-items {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column; }
+  .p-violations__grid-item-content--radio-items input {
+    float: left;
+    margin-right: 1em; }
+
+/*
+* Target the system fonts first (http://www.smashingmagazine.com/2015/11/using-system-ui-fonts-practical-guide/)
+* then provide similar fallbacks
+*/
+html {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', Avenir, Geneva, Tahoma, san-serif; }
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  color: #6441a4;
+  line-height: 2.25; }
+
+.u-relative {
+  position: relative; }
+
+.u-fill-height {
+  height: 100%; }
+
+.u-fill-width {
+  width: 100%; }
+
+.u-fill {
+  height: 100%;
+  width: 100%; }
+
+.u-align-center {
+  text-align: center; }
+
+.u-margin-auto {
+  margin: auto; }
+
+.u-block {
+  display: block; }
+
+html {
+  font-size: 100%; }
+
+body {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #e8e8e8; }
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0; }
+
+.application {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  overflow-y: auto;
+  background-color: #e8e8e8;
+  z-index: 1; }
+  .application .application__main-content {
+    min-width: 40rem; }
+
+/*# sourceMappingURL=dummy.css.map */
