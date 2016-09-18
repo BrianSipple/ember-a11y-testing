@@ -11,7 +11,7 @@ $margin__grid-item--horizontal: 0.75em;
 }
 
 .p-violations__header-hint {
-  color: $theme-color__primary-1--700;
+  color: $theme-color__primary--700;
 }
 
 .p-violations__noise-selectors-container {
@@ -64,10 +64,3 @@ $margin__grid-item--horizontal: 0.75em;
     margin-right: 1em;
   }
 }
-//.p-violations__grid-item-content--radio {
-//  flex-shrink: 0;
-//
-//  input {
-//    float: left;
-//  }
-//}

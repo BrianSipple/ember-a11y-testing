@@ -3,11 +3,15 @@
  * COLORS
  * -----------------------------------------
  */
-$theme-color__primary-1--100: hsla(251, 72%, 81%, 1.00);
-$theme-color__primary-1--300: hsla(261, 43%, 55%, 1.00);
-$theme-color__primary-1--500: hsla(261, 43%, 45%, 1.00);
-$theme-color__primary-1--700: hsla(251, 42%, 31%, 1.00);
-$theme-color__primary-1--900: hsla(256, 22%, 10%, 1.00);
+$theme-color__primary--100: hsla(251, 72%, 81%, 1.00);
+$theme-color__primary--300: hsla(261, 43%, 55%, 1.00);
+$theme-color__primary--500: hsla(261, 43%, 45%, 1.00);
+$theme-color__primary--700: hsla(251, 42%, 31%, 1.00);
+$theme-color__primary--900: hsla(256, 22%, 10%, 1.00);
+
+$theme-color__accent-1--500: hsla(187, 78%, 64%, 1.00);
+
+$theme-color__accent-2--500: hsla(60, 100%, 71%, 1.00);
 
 $theme-color__nearWhite: hsla(0, 0%, 98%, 1.00);
 $theme-color__offWhite: hsla(0, 0%, 91%, 1.00);

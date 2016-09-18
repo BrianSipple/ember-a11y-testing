@@ -2,11 +2,11 @@ $height__radio-selector-track-container: 4rem;
 $height__radio-selector-track-circle: $height__radio-selector-track-container * 0.5;
 $offset__title-below-circle: 0.40em;
 
-$color__circle--primary: $theme-color__primary-1--700;
-$color__circle--accent: $theme-color__primary-1--100;
-$color__label--checked: $theme-color__primary-1--300;
+$color__circle--primary: $theme-color__primary--700;
+$color__circle--accent: $theme-color__primary--100;
+$color__label--checked: $theme-color__primary--300;
 $color__track: hsla(0, 0%, 59%, 1.00);
-$color__track-heading: $theme-color__primary-1--700;
+$color__track-heading: $theme-color__primary--500;
 
 
 $animation-easing__to-checked: cubic-bezier(0.00, 0.300, 0.00, 1.480); /* ease-out-cubic with 8% bounce */
@@ -185,5 +185,5 @@ $animation-duration__circle-toggle: 0.37s;
  * Hovering over circle when it's not focused or checked
  */
 .c-radio-track__item-input:hover:not(:focus):not(:checked) + .c-radio-track__item-node::before {
-  background-color: $theme-color__primary-1--500;
+  background-color: $theme-color__primary--500;
 }

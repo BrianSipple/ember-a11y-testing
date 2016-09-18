@@ -16,7 +16,10 @@ body {
   padding: 0;
   width: 100%;
   height: 100%;
-  background-color: $theme-color__offWhite;
+  // background-color: $theme-color__offWhite;
+  background-color: $theme-color__nearWhite;
+  // background-color: $theme-color__accent-1--500;
+  // background-color: $theme-color__primary-2--500;
 }
 
 ul {
@@ -32,10 +35,11 @@ ul {
   height: 100vh;
   overflow: hidden;
   overflow-y: auto;
-  background-color: $theme-color__offWhite;
+  // background-color: $theme-color__offWhite;
   z-index: 1;
 
-  .application__header {
+  .application__main-heading {
+    color: $theme-color__primary--700;
   }
 
   .application__main-content {
