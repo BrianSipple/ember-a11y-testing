@@ -22,7 +22,10 @@ export default Route.extend({
         elem.classList.remove(...[elem.className.match(/axe-violation--[^\s]*/g)]);
       });
 
-      set(this.currentModel, 'currentNoiseLevel', level);
+      Ember.run.scheduleOnce('afterRender', this, function() {
+        set(this.currentModel, 'currentNoiseLevel', level);  
+      });
+
     }
   }
 });

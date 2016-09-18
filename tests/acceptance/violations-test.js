@@ -1,11 +1,14 @@
+import Ember from 'ember';
 import { test } from 'qunit';
 import moduleForAcceptance from '../../tests/helpers/module-for-acceptance';
 import sinon from 'sinon';
 
+const { run } = Ember;
+
 /*
  * Violation selectors reported by axe in its violations results
- * 🔊 NOTE: These are deliberatly sorted A-Z, as haven't yet figured out
- * where axes gets its ordering from (it doesn't appear to be DOM order)
+ * 🔊 NOTE (Brian): These are deliberatly sorted A-Z, as I haven't yet figured out
+ * where axe gets its ordering from (it doesn't appear to be DOM order)
  */
 const VIOLATION_SELECTORS = [
   "#violations__empty-button",
@@ -60,24 +63,24 @@ test('marking DOM nodes with violations', function(assert) {
 test('violationsHelper set in the global scope', function(assert) {
 
   // In order for the audit to run, we have to act like we're not in testing
-  Ember.run(function() { Ember.testing = false; });
+  run(function() { Ember.testing = false; });
 
-  visit('/violations');
+  visit('/');
 
   let logTipSpy;
 
   // ensures we set the spy before the 'afterRender' queue
-  Ember.run.once(function() {
+  run.once(function() {
     logTipSpy = sandbox.spy(window.violationsHelper, 'logTip');
   });
 
   andThen(() => {
-    assert.equal(window.violationsHelper.count, 2, "Two violations are found in the violationsHelper");
+    assert.equal(window.violationsHelper.count, 14, "Two violations are found in the violationsHelper");
 
     assert.ok(logTipSpy.calledOnce, "logTip is only called once after all components are rendered and violations logged");
 
     // Turn testing mode back on to ensure validity of other tests
-    Ember.run(function() { Ember.testing = true; });
+    run(function() { Ember.testing = true; });
   });
 
 });
